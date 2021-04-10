@@ -27,8 +27,13 @@ export async function filterImageFromURL(inputURL: string): Promise<string>{
 // useful to cleanup after tasks
 // INPUTS
 //    files: Array<string> an array of absolute paths to files
-export async function deleteLocalFiles(files:Array<string>){
-    for( let file of files) {
-        fs.unlinkSync(file);
-    }
+// export async function deleteLocalFiles(files:Array<string>){
+export async function deleteLocalFiles(directoryPath:string){
+    
+    fs.readdir(directoryPath,(err, files)=>{
+        //handling error
+        if (err) { return console.log('Unable to scan directory: ' + err);} 
+        //listing all files using forEach
+        for( let file of files) { fs.unlinkSync(directoryPath+file); }
+    });
 }
